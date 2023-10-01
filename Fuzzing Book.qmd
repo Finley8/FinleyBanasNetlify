@@ -1,0 +1,103 @@
+---
+title: "Fuzzing Book"
+---
+
+First Fuzzing Book summary:
+
+The fuzzing book mainly focuses on creating, testing, and understanding Python programs.  Testing the code's functionality is super important, and you can automate or manually test your code. Manual testing is running the program and testing the program by hand. You can automate the testing process by having your computer do the computation and then check the code. It is of the utmost importance that we test the program on several different inputs and check the results extensively and automatically. This is because testing aims to execute a program to find and fix bugs. There are limits to testing. There will always be untested outputs, which can guarantee that there is still a possible problem with the program that needs to be solved. 
+
+
+
+Second Fuzzing Book summary:
+
+
+Summary:
+
+The coverage section of the Fuzzing Book leans into the importance of checking your work for errors. Two examples of testing in the book are White-Box testing and Black-Box testing. Black box testing will only test specific characters and find errors within the specified group. Black box testing’s downside is that implemented testing often covers more ground than specified behavior. White box testing derives tests through implementation. Some coverage criteria must be fulfilled before the test can be considered sufficient. The downside of white box testing is when some specified functionality is missing, and the test will not catch it.
+
+Statement coverage – each statement in the code must be executed by at least one test input.
+
+Branch coverage – each branch in the code must be taken by at least one test input. (This translates to each if and while decision once being true, and once being false.)
+
+Coverage classes measure the effectiveness of test generation techniques but also guide test generation toward test coverage. You can use range to see if a line is being tested. Based on this, you can tell if a test generation method is effective. 
+
+Reflection:
+
+This article was beneficial for learning about coverage in general. I learned different ways of testing and how to check if that testing is correct. Since there are many ways to test code, learning how to ensure your test is accurate before publishing it is helpful. Coverage methods being completely automated makes this possible in a short amount of time. Though there are many types, branch, and statement coverage are essential. 
+
+Action Items:
+
+`cgi_decode()` can return false variables without anyone noticing. We can implement an Oracle or a result tracker to verify the test results. This can be used in class to ensure that our testing for future projects can be correct and efficient. 
+
+
+
+Third Fuzzing Book Summary:
+
+
+Summary:
+
+`Fuzzer` is the base class for fuzzers, represented using `RandomFuzzer`. Within `Fuzzer` is the `fuzz()` method, which uses objects to return a string with a generated input. A `Fuzzer` can also be paired with a `Runner`. The runner will take the fuzzed strings as input. It will produce a class-specific status and an outcome of (`PASS`, `FAIL`, or `UNRESOLVED`). A fuzzing generator has random characters, adds them to a buffering string value, and returns a string. A user can use a fuzzer to open an input file and invoke external programs. When the fuzzer was built in 1988 by Professor Barton Miller, he struggled to find a legitimate way to check for errors. His only indication that a program was not going to work was if the program hung or crashed. In recent years, new forms of checking for errors were created that did not rely on the program crashing. The new ways of checking for mistakes within a program were by checking memory access and information leaks.
+
+
+Reflection:
+
+I initially needed clarification about what fuzzing was. I originally thought my Professor was playing a trick by telling me the name of a fake book. It has come to my attention that fuzzing is more than a funny name for a book. This chapter in the book outlined in great detail what fuzzing is and how it can and is used in the code we see every day. The book even told us how fuzzing was created and the steps taken from that day until now to create a better error-checking system.  
+
+Action Items:
+
+We will use fuzzing within our academic semester, and it would be beneficial to become familiar with how it works. We can use `Fuzzer` to check and write into files that will be imported into `chasten`. We can also use `Fuzzer` to find bugs within our project code.   
+
+
+
+
+Fourth Fuzzing Book Summary:
+
+
+Summary:
+
+Mutation testing brings coverage to a new and more advanced level. Mutation testing injects mutations (artificial faults) into the code to check if a test suite will catch the error. Using the class `MuFunctionAnalyzer` you can target individual functions for testing. When given a function and test cases, the user can run mutation analysis on the test cases. An example of the `MuFunctionAnalyzer` being used can be seen below:
+
+```
+    >>> for mutant in MuFunctionAnalyzer(gcd, log=True):
+    >>>     with mutant:
+    >>>         assert gcd(1, 0) == 1, "Minimal"
+    >>>         assert gcd(0, 1) == 1, "Mirror"
+    >>> mutant.pm.score()
+    ->	gcd_1
+    <-	gcd_1
+    Detected gcd_1 <class 'UnboundLocalError'> local variable 'c' referenced before assignment
+
+    ->	gcd_2
+    <-	gcd_2
+    Detected gcd_2 <class 'AssertionError'> Mirror
+
+    ->	gcd_3
+    <-	gcd_3
+
+    ->	gcd_4
+    <-	gcd_4
+
+    ->	gcd_5
+    <-	gcd_5
+
+    ->	gcd_6
+    <-	gcd_6
+
+    ->	gcd_7
+    <-	gcd_7
+    Detected gcd_7 <class 'AssertionError'> Minimal
+
+
+    0.42857142857142855
+```
+
+Using mutation testing also spans over to programs. Using the class `MuProgramAnalyzer` the user can target isolated programs using test suites. Using a program with its source code and test suites, you can find the mutation score of the program. Mutation score is used to measure the quality of test suites. A higher mutation score means your test suite will be more accurate. Structural coverage is the wrong way of measuring the correctness of a program. The functions may receive a high percentage of code coverage. However, its ability to test to discover bugs will be close to zero. The types of mutations added during mutation testing would be those that a static analysis tool would not pick up on. A test suite will be judged based on its ability to detect and prevent these mutations. To test the likelihood of a test suite to find bugs you can add mutations one at a time and then count how many times the test suite discovers the mutations. This is called fault injection. This is a manual process that is insufficient for other forms of coverage because the user could miss some important classes of bugs. 
+
+Reflection:
+
+I believe that mutation testing is very important for coverage. It seems as though this is the best way to check test suites and see if they will catch all errors. In comparison to structural coverage mutation testing is double as effective because it can find the bugs in your code. Aiming at artificial faults the user can test almost any test suite for maximum effectiveness. I think this idea is very smart because when you are working with tests that are at maximum effectiveness you will not need to worry about any bugs within your program or function.
+
+Action Items:
+
+Using mutation testing within our `Chasten` project will allow us to test and move forward quicker since we will have no worries that the test missed a bug. Using mutation testing may take some more time to set up but I believe that it would be worth it for tests that will greatly impact our work. 
+
